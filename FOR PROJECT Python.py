@@ -1,0 +1,297 @@
+# -*- coding: utf-8 -*-
+
+
+from math import sqrt as sq
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(583, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.PB1 = QtWidgets.QPushButton(self.centralwidget)
+        self.PB1.setGeometry(QtCore.QRect(260, 230, 151, 27))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setItalic(False)
+        self.PB1.setFont(font)
+        self.PB1.setFocusPolicy(QtCore.Qt.WheelFocus)
+        self.PB1.setObjectName("PB1")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(30, 80, 121, 20))
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(40, 270, 131, 16))
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(10, 30, 561, 20))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName("label_3")
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(110, 110, 135, 100))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.LE1 = QtWidgets.QLineEdit(self.layoutWidget)
+        self.LE1.setObjectName("LE1")
+        self.verticalLayout.addWidget(self.LE1)
+        self.LE2 = QtWidgets.QLineEdit(self.layoutWidget)
+        self.LE2.setObjectName("LE2")
+        self.verticalLayout.addWidget(self.LE2)
+        self.LE3 = QtWidgets.QLineEdit(self.layoutWidget)
+        self.LE3.setObjectName("LE3")
+        self.verticalLayout.addWidget(self.LE3)
+        self.PB2 = QtWidgets.QPushButton(self.centralwidget)
+        self.PB2.setGeometry(QtCore.QRect(260, 410, 151, 27))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.PB2.setFont(font)
+        self.PB2.setObjectName("PB2")
+        self.LE5 = QtWidgets.QLineEdit(self.centralwidget)
+        self.LE5.setGeometry(QtCore.QRect(110, 380, 133, 20))
+        self.LE5.setObjectName("LE5")
+        self.LE4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.LE4.setGeometry(QtCore.QRect(110, 310, 133, 20))
+        self.LE4.setObjectName("LE4")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(40, 350, 131, 16))
+        self.label_4.setObjectName("label_4")
+        self.PB3 = QtWidgets.QPushButton(self.centralwidget)
+        self.PB3.setGeometry(QtCore.QRect(200, 470, 151, 41))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        self.PB3.setFont(font)
+        self.PB3.setObjectName("PB3")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 583, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.PB1.setText(_translate("MainWindow", "Добавить в файл!!"))
+        self.label.setText(_translate("MainWindow", "Задайте коэфициенты"))
+        self.label_2.setText(_translate("MainWindow", "Вы добавили уравнение"))
+        self.label_3.setText(_translate("MainWindow", "Составление квадратичного уравнения, нахождение его корней"))
+        self.LE1.setPlaceholderText(_translate("MainWindow", "Введите коэфициент а"))
+        self.LE2.setPlaceholderText(_translate("MainWindow", "Введите коэфициент b"))
+        self.LE3.setPlaceholderText(_translate("MainWindow", "Введите коэфициент c"))
+        self.PB2.setText(_translate("MainWindow", "Задать имя файла"))
+        self.LE5.setPlaceholderText(_translate("MainWindow", "project.txt"))
+        self.LE4.setPlaceholderText(_translate("MainWindow", "Уравнение..."))
+        self.label_4.setText(_translate("MainWindow", "Ввдети имя файла"))
+        self.PB3.setText(_translate("MainWindow", "Просмотреть файл"))
+
+
+class MyWidget(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.PB1.clicked.connect(self.makeyr)
+        self.PB2.clicked.connect(self.prosm)
+        self.PB3.clicked.connect(self.look)
+        self.count = 0
+        self.ques = ['Найдите произведение корней уравнения:',
+                     'Найдите сумму корней уравнения:', 'Найдите максимальный корень уравнения:',
+                     'Найдите минимальный корень уравнения:']
+        self.yra = str()
+        self.date = set()
+        self.x1, self.x2 = float(), float()
+        self.ak = str()
+        self.bk = str()
+        self.ck = str()
+        self.nazv = str()
+        self.dict = dict()
+
+    def obr(self, x):
+        if '.' in str(x):
+            x = str(x).replace('.', ',')
+            if x[x.index(',') + 1] == '0':
+                x = x[:x.index(',')]
+        return str(x)
+
+    def korn(self):
+        dis = float(self.bk) ** 2 - 4 * float(self.ak) * float(self.ck)
+        if dis > 0:
+            self.x1, self.x2 = (-float(self.bk) + sq(dis)) / (2 * float(self.ak)), (-float(self.bk) - sq(dis)) / (
+                    2 * float(self.ak))
+        elif dis == 0:
+            self.x1, self.x2 = -float(self.bk) / (2 * float(self.ak)), -float(self.bk) / (2 * float(self.ak))
+        else:
+            error2 = QMessageBox()
+            error2.setWindowTitle('Ошибка')
+            error2.setText('Введены некорректные коэффициенты')
+            error2.setIcon(QMessageBox.Warning)
+            error2.setStandardButtons(QMessageBox.Ok)
+            error2.setInformativeText('Введите коэффициенты, причем дискриминант должен быть положительным'
+                                      ' или равен нулю.\nУравнение в файл не добавлено.')
+            error2.exec_()
+            self.LE1.setText("")
+            self.LE2.setText("")
+            self.LE3.setText("")
+            self.LE4.setText("")
+
+    def look(self):
+        self.prosm()
+        f = open(str(self.nazv), encoding="utf-8")
+        look_ = QMessageBox()
+        look_.setWindowTitle('Просмотр')
+        look_.setText('Вы открыли файл ' + str(self.nazv))
+        look_.setIcon(QMessageBox.Information)
+        look_.setStandardButtons(QMessageBox.Ok)
+        look_.setText(f.read())
+        look_.exec_()
+        f.close()
+
+    def find_hcf(self, a, b):
+        while b:
+            a, b = b, a % b
+        return a
+
+    def prosm(self):
+        self.nazv = self.LE5.text()
+        if self.nazv == '':
+            self.nazv = "project.txt"
+
+    def is_int(self, x):
+        temp = str(x)
+        i = 0
+        while i < len(temp):
+            if temp[i] == '.':
+                while i + 1 < len(temp):
+                    if temp[i + 1] != '0':
+                        return False
+                    i += 1
+                else:
+                    return True
+            i += 1
+        else:
+            return True
+
+    def makeyr(self):
+        self.count += 1
+
+        a = self.LE1.text()
+        b = self.LE2.text()
+        c = self.LE3.text()
+
+        if not self.is_int(a) or a == '0' or not self.is_int(b) or b == '0' or not self.is_int(
+                c) or c == '0' or not a.isdigit() or not b.isdigit() or not c.isdigit():
+            error1 = QMessageBox()
+            error1.setWindowTitle('Ошибка')
+            error1.setText('Введены некорректные коэффициенты')
+            error1.setIcon(QMessageBox.Warning)
+            error1.setStandardButtons(QMessageBox.Ok)
+            error1.setInformativeText('Необходимо ввести коэффициенты, причем они должны быть целыми и не рaвны нулю.\n'
+                                      'Уравнение в файл не добавлено.')
+            error1.exec_()
+            self.LE1.setText("")
+            self.LE2.setText("")
+            self.LE3.setText("")
+            self.LE4.setText("")
+
+        else:
+            self.ak = a
+            self.bk = b
+            self.ck = c
+
+            if float(a) == 1:
+                a = ''
+            elif float(a) == -1:
+                a = '-'
+            if float(c) > 0:
+                c = '+' + str(c)
+            if float(b) != 0:
+                if float(b) == 1:
+                    b = ''
+                elif float(b) == -1:
+                    b = '-'
+                self.yra = (self.obr(str(a)) + 'x' + '\u00B2' + '+' + self.obr((b)) + 'x' + self.obr((c)) + '=0').replace(
+                    '+-', '-')
+
+            self.LE4.setText(self.yra)
+            self.LE1.setText("")
+            self.LE2.setText("")
+            self.LE3.setText("")
+
+            if self.find_hcf(float(self.ak), float(self.bk)) == self.find_hcf(float(self.bk), float(self.ck)):
+                akon = float(self.ak) // self.find_hcf(float(self.ak), float(self.bk))
+                bkon = float(self.bk) // self.find_hcf(float(self.ak), float(self.bk))
+                ckon = float(self.ck) // self.find_hcf(float(self.ak), float(self.bk))
+            else:
+                akon = float(self.ak)
+                bkon = float(self.bk)
+                ckon = float(self.ck)
+
+            if float(akon) == 1:
+                akon = ''
+            elif float(akon) == -1:
+                akon = '-'
+            if float(ckon) > 0:
+                ckon = '+' + str(ckon)
+            if float(bkon) != 0:
+                if float(bkon) == 1:
+                    bkon = ''
+                elif float(bkon) == -1:
+                    bkon = '-'
+                self.yra = (self.obr(str(akon)) + 'x' + '\u00B2' + '+' + self.obr(str(bkon)) + 'x' + self.obr(
+                    str(ckon)) + '=0').replace('+-', '-').replace('++', '+')
+
+            self.yra = (self.obr(str(akon)) + 'x' + '\u00B2' + '+' + self.obr(str(bkon)) + 'x' + self.obr(
+                str(ckon)) + '=0').replace('+-', '-').replace('++', '+')
+
+            if self.yra not in self.date:
+                self.korn()
+                self.prosm()
+                self.date.add(self.yra)
+                if self.nazv in self.dict.keys():
+                    self.count = self.dict[self.nazv] + 1
+                else:
+                    self.dict[self.nazv] = 1
+                    self.count = 1
+                with open(str(self.nazv), 'a', encoding='utf-8') as f:
+                    for i in range(4):
+                        f.write(f'::{self.count}\n')
+                        if i == 0:
+                            otvet = self.obr(str(self.x1 * self.x2))
+                        elif i == 1:
+                            otvet = self.obr(str(self.x1 + self.x2))
+                        elif i == 2:
+                            otvet = self.obr(str(max(self.x1, self.x2)))
+                        elif i == 3:
+                            otvet = self.obr(str(min(self.x1, self.x2)))
+                        f.write(f'::{self.ques[i]} {self.yra}\n')
+                        f.write('{=' + f'{self.obr(str(otvet))}' + '}' + '\n')
+                        f.write('\n')
+                        self.count += 1
+                    self.dict[self.nazv] = self.count - 1
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = MyWidget()
+    ex.show()
+    sys.exit(app.exec_())
