@@ -5,12 +5,16 @@ from math import sqrt as sq
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(583, 600)
+        MainWindow.resize(583, 556)
+        MainWindow.setStyleSheet("background-color: rgb(252, 228, 214);\n"
+"background-color: rgb(252, 240, 228);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.PB1 = QtWidgets.QPushButton(self.centralwidget)
@@ -18,15 +22,25 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
+        font.setBold(True)
         font.setItalic(False)
+        font.setWeight(75)
         self.PB1.setFont(font)
         self.PB1.setFocusPolicy(QtCore.Qt.WheelFocus)
+        self.PB1.setStyleSheet("background-color: rgb(226, 228, 255);\n"
+"color:rgb(0,0,0);")
         self.PB1.setObjectName("PB1")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(30, 80, 121, 20))
+        self.label.setGeometry(QtCore.QRect(30, 80, 131, 20))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label.setFont(font)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(40, 270, 131, 16))
+        self.label_2.setGeometry(QtCore.QRect(40, 270, 151, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(10, 30, 561, 20))
@@ -36,47 +50,91 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_3.setFont(font)
+        self.label_3.setStyleSheet("color:rgb(0, 112, 192);")
         self.label_3.setObjectName("label_3")
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(110, 110, 135, 100))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.LE1 = QtWidgets.QLineEdit(self.layoutWidget)
-        self.LE1.setObjectName("LE1")
-        self.verticalLayout.addWidget(self.LE1)
-        self.LE2 = QtWidgets.QLineEdit(self.layoutWidget)
-        self.LE2.setObjectName("LE2")
-        self.verticalLayout.addWidget(self.LE2)
-        self.LE3 = QtWidgets.QLineEdit(self.layoutWidget)
-        self.LE3.setObjectName("LE3")
-        self.verticalLayout.addWidget(self.LE3)
         self.PB2 = QtWidgets.QPushButton(self.centralwidget)
         self.PB2.setGeometry(QtCore.QRect(260, 410, 151, 27))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
-        font.setBold(False)
-        font.setWeight(50)
+        font.setBold(True)
+        font.setWeight(75)
         self.PB2.setFont(font)
+        self.PB2.setStyleSheet("background-color: rgb(226, 228, 255);\n"
+"color:rgb(0,0,0);")
         self.PB2.setObjectName("PB2")
         self.LE5 = QtWidgets.QLineEdit(self.centralwidget)
-        self.LE5.setGeometry(QtCore.QRect(110, 380, 133, 20))
+        self.LE5.setGeometry(QtCore.QRect(110, 380, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.LE5.setFont(font)
         self.LE5.setObjectName("LE5")
         self.LE4 = QtWidgets.QLineEdit(self.centralwidget)
-        self.LE4.setGeometry(QtCore.QRect(110, 310, 133, 20))
+        self.LE4.setGeometry(QtCore.QRect(110, 310, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        font.setBold(True)
+        font.setWeight(75)
+        self.LE4.setFont(font)
         self.LE4.setObjectName("LE4")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(40, 350, 131, 16))
+        self.label_4.setGeometry(QtCore.QRect(40, 350, 121, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.PB3 = QtWidgets.QPushButton(self.centralwidget)
-        self.PB3.setGeometry(QtCore.QRect(200, 470, 151, 41))
+        self.PB3.setGeometry(QtCore.QRect(110, 460, 151, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
         self.PB3.setFont(font)
+        self.PB3.setStyleSheet("background-color: rgb(226, 228, 255);\n"
+"color:rgb(0,0,0);")
         self.PB3.setObjectName("PB3")
+        self.PB4 = QtWidgets.QPushButton(self.centralwidget)
+        self.PB4.setGeometry(QtCore.QRect(320, 460, 151, 41))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.PB4.setFont(font)
+        self.PB4.setStyleSheet("background-color: rgb(226, 228, 255);\n"
+"color:rgb(0,0,0);")
+        self.PB4.setObjectName("PB4")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(270, 470, 47, 21))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.LE1 = QtWidgets.QLineEdit(self.centralwidget)
+        self.LE1.setGeometry(QtCore.QRect(111, 117, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.LE1.setFont(font)
+        self.LE1.setStyleSheet("color:rgb(29, 46, 89);\n"
+"background-color: rgb(193, 205, 234);")
+        self.LE1.setObjectName("LE1")
+        self.LE3 = QtWidgets.QLineEdit(self.centralwidget)
+        self.LE3.setGeometry(QtCore.QRect(111, 181, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.LE3.setFont(font)
+        self.LE3.setStyleSheet("color:rgb(29, 46, 89);\n"
+"background-color: rgb(193, 205, 234);")
+        self.LE3.setObjectName("LE3")
+        self.LE2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.LE2.setGeometry(QtCore.QRect(111, 149, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.LE2.setFont(font)
+        self.LE2.setStyleSheet("color:rgb(29, 46, 89);\n"
+"background-color: rgb(193, 205, 234);")
+        self.LE2.setObjectName("LE2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 583, 21))
@@ -92,18 +150,20 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.PB1.setText(_translate("MainWindow", "Добавить в файл!!"))
+        self.PB1.setText(_translate("MainWindow", "Добавить в файл"))
         self.label.setText(_translate("MainWindow", "Задайте коэфициенты"))
         self.label_2.setText(_translate("MainWindow", "Вы добавили уравнение"))
         self.label_3.setText(_translate("MainWindow", "Составление квадратичного уравнения, нахождение его корней"))
-        self.LE1.setPlaceholderText(_translate("MainWindow", "Введите коэфициент а"))
-        self.LE2.setPlaceholderText(_translate("MainWindow", "Введите коэфициент b"))
-        self.LE3.setPlaceholderText(_translate("MainWindow", "Введите коэфициент c"))
         self.PB2.setText(_translate("MainWindow", "Задать имя файла"))
-        self.LE5.setPlaceholderText(_translate("MainWindow", "project.txt"))
+        self.LE5.setText(_translate("MainWindow", "project.txt"))
         self.LE4.setPlaceholderText(_translate("MainWindow", "Уравнение..."))
         self.label_4.setText(_translate("MainWindow", "Ввдети имя файла"))
         self.PB3.setText(_translate("MainWindow", "Просмотреть файл"))
+        self.PB4.setText(_translate("MainWindow", "Просмотреть БД"))
+        self.label_5.setText(_translate("MainWindow", "ИЛИ"))
+        self.LE1.setPlaceholderText(_translate("MainWindow", "Коэффициент а"))
+        self.LE3.setPlaceholderText(_translate("MainWindow", "Коэффициент c"))
+        self.LE2.setPlaceholderText(_translate("MainWindow", "Коэффициент b"))
 
 
 class MyWidget(QMainWindow, Ui_MainWindow):
@@ -125,6 +185,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.ck = str()
         self.nazv = str()
         self.dict = dict()
+        self.flag = True
 
     def obr(self, x):
         if '.' in str(x):
@@ -171,6 +232,15 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             a, b = b, a % b
         return a
 
+    def answ(self, a):
+        if '.' in str(a):
+            if len(a[a.index('.') + 1:]) > 2:
+                return round(a, 2)
+            elif len(a[a.index('.') + 1:]) == 1:
+                return a
+        return a
+
+
     def prosm(self):
         self.nazv = self.LE5.text()
         if self.nazv == '':
@@ -198,8 +268,21 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         b = self.LE2.text()
         c = self.LE3.text()
 
+        if a[0] == '-':
+            aprov = a[1:]
+        else:
+            aprov = a[::]
+        if b[0] == '-':
+            bprov = b[1:]
+        else:
+            bprov = b[::]
+        if c[0] == '-':
+            cprov = c[1:]
+        else:
+            cprov = c[::]
+
         if not self.is_int(a) or a == '0' or not self.is_int(b) or b == '0' or not self.is_int(
-                c) or c == '0' or not a.isdigit() or not b.isdigit() or not c.isdigit():
+                c) or c == '0' or not aprov.isdigit() or not bprov.isdigit() or not cprov.isdigit():
             error1 = QMessageBox()
             error1.setWindowTitle('Ошибка')
             error1.setText('Введены некорректные коэффициенты')
@@ -229,7 +312,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                     b = ''
                 elif float(b) == -1:
                     b = '-'
-                self.yra = (self.obr(str(a)) + 'x' + '\u00B2' + '+' + self.obr((b)) + 'x' + self.obr((c)) + '=0').replace(
+                self.yra = (self.obr(str(a)) + 'x' + '\u00B2' + '+' + self.obr(str(b)) + 'x' + self.obr(str(c)) + '=0').replace(
                     '+-', '-')
 
             self.LE4.setText(self.yra)
@@ -264,6 +347,14 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                 str(ckon)) + '=0').replace('+-', '-').replace('++', '+')
 
             if self.yra not in self.date:
+                if self.flag:
+                    pred = QMessageBox()
+                    pred.setWindowTitle('Предупреждение')
+                    pred.setText('Ответы представляют собой либо целое число, либо десятичную дробь.')
+                    pred.setIcon(QMessageBox.Information)
+                    pred.setStandardButtons(QMessageBox.Ok)
+                    pred.exec_()
+                    self.flag = False
                 self.korn()
                 self.prosm()
                 self.date.add(self.yra)
@@ -275,19 +366,38 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                 with open(str(self.nazv), 'a', encoding='utf-8') as f:
                     for i in range(4):
                         f.write(f'::{self.count}\n')
+                        f.write('::При необходимости ответ округлите до сотых\n')
                         if i == 0:
-                            otvet = self.obr(str(self.x1 * self.x2))
+                            otvet = self.obr(self.obr(str(self.x1 * self.x2)))
+                            ot1 = otvet
                         elif i == 1:
-                            otvet = self.obr(str(self.x1 + self.x2))
+                            otvet = self.obr(self.obr(str(self.x1 + self.x2)))
+                            ot2 = otvet
                         elif i == 2:
-                            otvet = self.obr(str(max(self.x1, self.x2)))
+                            otvet = self.obr(self.obr(str(max(self.x1, self.x2))))
+                            ot3 = otvet
                         elif i == 3:
-                            otvet = self.obr(str(min(self.x1, self.x2)))
+                            otvet = self.obr(self.obr(str(min(self.x1, self.x2))))
+                            ot4 = otvet
                         f.write(f'::{self.ques[i]} {self.yra}\n')
                         f.write('{=' + f'{self.obr(str(otvet))}' + '}' + '\n')
                         f.write('\n')
                         self.count += 1
                     self.dict[self.nazv] = self.count - 1
+
+                # con = sqlite3.connect('DataBase.db')
+                # cur = con.cursor()
+                # cur.execute(f'INSERT INTO equation(id, yrav, summa, multiply, maxim, minim) VALUES({self.count}, {self.yra}, {ot1}, {ot2}, {ot3}, {ot4})')
+                # con.commit()
+                # con.close()
+
+            else:
+                pred1 = QMessageBox()
+                pred1.setWindowTitle('Предупреждение')
+                pred1.setText('Уравнение с подобными коэффициентами уже записано в файл и БД.')
+                pred1.setIcon(QMessageBox.Information)
+                pred1.setStandardButtons(QMessageBox.Ok)
+                pred1.exec_()
 
 
 if __name__ == '__main__':
@@ -295,3 +405,131 @@ if __name__ == '__main__':
     ex = MyWidget()
     ex.show()
     sys.exit(app.exec_())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
