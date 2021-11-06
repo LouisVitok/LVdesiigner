@@ -2,11 +2,76 @@
 
 
 from math import sqrt as sq
+from PyQt5.QtGui import QPixmap
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
+
+
+class Ui_Dialog1(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(448, 322)
+        Dialog.setStyleSheet("background-color: rgb(252, 228, 214);")
+        self.textEdit = QtWidgets.QTextEdit(Dialog)
+        self.textEdit.setGeometry(QtCore.QRect(40, 100, 371, 101))
+        self.textEdit.setObjectName("textEdit")
+
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.textEdit.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+                                                   "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                   "<html><head><meta name=\"qrichtext\" content=\"1\" /><sty"
+                                                   "le type=\"text/css\">\n"
+                                                   "p, li { white-space: pre-wrap; }\n"
+                                                   "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-"
+                                                   "size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                   "<p style=\" margin-top:0px; margin-bottom:0px; marg"
+                                                   "in-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:"
+                                                   "0px;\">Данная программа направлена на создание файла, в который буд"
+                                                   "ут записываться уравнения, для загрузки в систему Moodle. Пользоват"
+                                                   "ель должен ввести коэффициенты уравнения общего вида, может задать "
+                                                   "имя файла. Программа реагирует на действия пользователя, она может "
+                                                   "выдавать предупреждение о неккоректно введеных данных. Картинка - и"
+                                                   "ндикатор того, что уравнение добавлено в файл и базу данных.</p></b"
+                                                   "ody></html>"))
+
+
+class MyDialog1(QtWidgets.QDialog, Ui_Dialog1):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+
+class Ui_Dialog2(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(502, 1072)
+        self.textEdit = QtWidgets.QTextEdit(Dialog)
+        self.textEdit.setGeometry(QtCore.QRect(0, 0, 501, 1061))
+        self.textEdit.setObjectName("textEdit")
+
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+
+
+class MyDialog2(QtWidgets.QDialog, Ui_Dialog2):
+    def __init__(self, file):
+        super().__init__()
+        self.setupUi(self)
+        with open(file, 'rt') as f:
+            read_data = f.read()
+        self.textEdit.setHtml(_translate("Dialog", read_data))
 
 
 class Ui_MainWindow(object):
@@ -35,6 +100,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.label.setFont(font)
+        self.label.setStyleSheet("border-bottom-color: rgb(0, 0, 0);")
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(40, 270, 151, 16))
@@ -43,7 +109,7 @@ class Ui_MainWindow(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(10, 30, 561, 20))
+        self.label_3.setGeometry(QtCore.QRect(10, 10, 561, 20))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
@@ -135,6 +201,25 @@ class Ui_MainWindow(object):
         self.LE2.setStyleSheet("color:rgb(29, 46, 89);\n"
 "background-color: rgb(193, 205, 234);")
         self.LE2.setObjectName("LE2")
+        self.im = QtWidgets.QLabel(self.centralwidget)
+        self.im.setGeometry(QtCore.QRect(400, 75, 47, 13))
+        self.im.setObjectName("im")
+        self.podick = QtWidgets.QLabel(self.centralwidget)
+        self.podick.setGeometry(QtCore.QRect(373, 190, 133, 25))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.podick.setFont(font)
+        self.podick.setObjectName("podick")
+        self.PB5 = QtWidgets.QPushButton(self.centralwidget)
+        self.PB5.setGeometry(QtCore.QRect(20, 40, 151, 27))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.PB5.setFont(font)
+        self.PB5.setStyleSheet("background-color: rgb(226, 228, 255);")
+        self.PB5.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 583, 21))
@@ -155,8 +240,8 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Вы добавили уравнение"))
         self.label_3.setText(_translate("MainWindow", "Составление квадратичного уравнения, нахождение его корней"))
         self.PB2.setText(_translate("MainWindow", "Задать имя файла"))
-        self.LE5.setText(_translate("MainWindow", "project.txt"))
-        self.LE4.setPlaceholderText(_translate("MainWindow", "Уравнение..."))
+        self.LE5.setPlaceholderText(_translate("MainWindow", "project.txt"))
+        self.LE4.setText(_translate("MainWindow", "Уравнение..."))
         self.label_4.setText(_translate("MainWindow", "Ввдети имя файла"))
         self.PB3.setText(_translate("MainWindow", "Просмотреть файл"))
         self.PB4.setText(_translate("MainWindow", "Просмотреть БД"))
@@ -164,6 +249,8 @@ class Ui_MainWindow(object):
         self.LE1.setPlaceholderText(_translate("MainWindow", "Коэффициент а"))
         self.LE3.setPlaceholderText(_translate("MainWindow", "Коэффициент c"))
         self.LE2.setPlaceholderText(_translate("MainWindow", "Коэффициент b"))
+        self.podick.setText(_translate("MainWindow", "Уравнение добавлено"))
+        self.PB5.setText(_translate("MainWindow", "О программе"))
 
 
 class MyWidget(QMainWindow, Ui_MainWindow):
@@ -173,6 +260,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.PB1.clicked.connect(self.makeyr)
         self.PB2.clicked.connect(self.prosm)
         self.PB3.clicked.connect(self.look)
+        self.PB5.clicked.connect(self.proga)
         self.count = 0
         self.ques = ['Найдите произведение корней уравнения:',
                      'Найдите сумму корней уравнения:', 'Найдите максимальный корень уравнения:',
@@ -186,6 +274,11 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.nazv = str()
         self.dict = dict()
         self.flag = True
+        self.pixmap = QPixmap('topchik1.jpg')
+        self.im.resize(100, 100)
+        self.im.setPixmap(self.pixmap)
+        self.im.setVisible(False)
+        self.podick.setVisible(False)
 
     def obr(self, x):
         if '.' in str(x):
@@ -193,6 +286,12 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             if x[x.index(',') + 1] == '0':
                 x = x[:x.index(',')]
         return str(x)
+
+    def proga(self):
+        pass
+        ex1 = MyDialog1()
+        ex1.show()
+
 
     def korn(self):
         dis = float(self.bk) ** 2 - 4 * float(self.ak) * float(self.ck)
@@ -267,6 +366,9 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         a = self.LE1.text()
         b = self.LE2.text()
         c = self.LE3.text()
+        if a != '':
+            self.im.setVisible(False)
+            self.podick.setVisible(False)
 
         if a[0] == '-':
             aprov = a[1:]
@@ -295,6 +397,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             self.LE2.setText("")
             self.LE3.setText("")
             self.LE4.setText("")
+
+
 
         else:
             self.ak = a
@@ -384,6 +488,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                         f.write('\n')
                         self.count += 1
                     self.dict[self.nazv] = self.count - 1
+                self.im.setVisible(True)
+                self.podick.setVisible(True)
 
                 # con = sqlite3.connect('DataBase.db')
                 # cur = con.cursor()
@@ -405,61 +511,6 @@ if __name__ == '__main__':
     ex = MyWidget()
     ex.show()
     sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
