@@ -24,7 +24,7 @@ class Ui_Dialog1(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "О приложении"))
         self.textEdit.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
                                                    "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><sty"
@@ -39,8 +39,9 @@ class Ui_Dialog1(object):
                                                    "ель должен ввести коэффициенты уравнения общего вида, может задать "
                                                    "имя файла. Программа реагирует на действия пользователя, она может "
                                                    "выдавать предупреждение о неккоректно введеных данных. Картинка - и"
-                                                   "ндикатор того, что уравнение добавлено в файл и базу данных.</p></b"
+                                                   "ндикатор того, что уравнение добавлено в файл.</p></b"
                                                    "ody></html>"))
+        self.textEdit.setReadOnly(True)
 
 
 class MyDialog1(QtWidgets.QDialog, Ui_Dialog1):
@@ -54,7 +55,7 @@ class Ui_Dialog2(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(502, 1072)
         self.textEdit = QtWidgets.QTextEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(0, 0, 501, 1061))
+        self.textEdit.setGeometry(QtCore.QRect(0, 0, 501, 1071))
         self.textEdit.setObjectName("textEdit")
 
         self.retranslateUi(Dialog)
@@ -62,16 +63,30 @@ class Ui_Dialog2(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Файл"))
 
 
 class MyDialog2(QtWidgets.QDialog, Ui_Dialog2):
-    def __init__(self, file):
+    def __init__(self, tex):
         super().__init__()
         self.setupUi(self)
-        with open(file, 'rt') as f:
-            read_data = f.read()
-        self.textEdit.setHtml(_translate("Dialog", read_data))
+        a = str("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+                                                   "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                   "<html><head><meta name=\"qrichtext\" content=\"1\" /><sty"
+                                                   "le type=\"text/css\">\n"
+                                                   "p, li { white-space: pre-wrap; }\n"
+                                                   "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-"
+                                                   "size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                   "<p style=\" margin-top:0px; margin-bottom:0px; marg"
+                                                   "in-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:"
+                                                   "0px;\">")
+        b = str()
+        for elem in tex.splitlines():
+            b += elem
+            b += '\n'
+        a += b
+        a += str("</p></b""ody></html>")
+        self.textEdit.setHtml(a)
 
 
 class Ui_MainWindow(object):
@@ -150,7 +165,7 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.PB3 = QtWidgets.QPushButton(self.centralwidget)
-        self.PB3.setGeometry(QtCore.QRect(110, 460, 151, 41))
+        self.PB3.setGeometry(QtCore.QRect(100, 460, 161, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -161,7 +176,7 @@ class Ui_MainWindow(object):
 "color:rgb(0,0,0);")
         self.PB3.setObjectName("PB3")
         self.PB4 = QtWidgets.QPushButton(self.centralwidget)
-        self.PB4.setGeometry(QtCore.QRect(320, 460, 151, 41))
+        self.PB4.setGeometry(QtCore.QRect(320, 460, 161, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -228,13 +243,12 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Приложение"))
         self.PB1.setText(_translate("MainWindow", "Добавить в файл"))
         self.label.setText(_translate("MainWindow", "Задайте коэфициенты"))
         self.label_2.setText(_translate("MainWindow", "Вы добавили уравнение"))
@@ -243,14 +257,14 @@ class Ui_MainWindow(object):
         self.LE5.setPlaceholderText(_translate("MainWindow", "project.txt"))
         self.LE4.setText(_translate("MainWindow", "Уравнение..."))
         self.label_4.setText(_translate("MainWindow", "Ввдети имя файла"))
-        self.PB3.setText(_translate("MainWindow", "Просмотреть файл"))
-        self.PB4.setText(_translate("MainWindow", "Просмотреть БД"))
+        self.PB3.setText(_translate("MainWindow", "1) Просмотреть файл"))
+        self.PB4.setText(_translate("MainWindow", "2) Просмотреть файл"))
         self.label_5.setText(_translate("MainWindow", "ИЛИ"))
         self.LE1.setPlaceholderText(_translate("MainWindow", "Коэффициент а"))
         self.LE3.setPlaceholderText(_translate("MainWindow", "Коэффициент c"))
         self.LE2.setPlaceholderText(_translate("MainWindow", "Коэффициент b"))
         self.podick.setText(_translate("MainWindow", "Уравнение добавлено"))
-        self.PB5.setText(_translate("MainWindow", "О программе"))
+        self.PB5.setText(_translate("MainWindow", "О приложении"))
 
 
 class MyWidget(QMainWindow, Ui_MainWindow):
@@ -260,6 +274,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.PB1.clicked.connect(self.makeyr)
         self.PB2.clicked.connect(self.prosm)
         self.PB3.clicked.connect(self.look)
+        self.PB4.clicked.connect(self.look2)
         self.PB5.clicked.connect(self.proga)
         self.count = 0
         self.ques = ['Найдите произведение корней уравнения:',
@@ -288,10 +303,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         return str(x)
 
     def proga(self):
-        pass
         ex1 = MyDialog1()
-        ex1.show()
-
+        ex1.exec_()
 
     def korn(self):
         dis = float(self.bk) ** 2 - 4 * float(self.ak) * float(self.ck)
@@ -316,6 +329,13 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
     def look(self):
         self.prosm()
+        with open(self.nazv, 'rt', encoding='utf-8') as f:
+            read_data = f.read()
+        ex2 = MyDialog2(read_data)
+        ex2.exec_()
+
+    def look2(self):
+        self.prosm()
         f = open(str(self.nazv), encoding="utf-8")
         look_ = QMessageBox()
         look_.setWindowTitle('Просмотр')
@@ -333,12 +353,10 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
     def answ(self, a):
         if '.' in str(a):
-            if len(a[a.index('.') + 1:]) > 2:
+            if len(str(a)[str(a).index('.') + 1:]) > 2:
                 return round(a, 2)
-            elif len(a[a.index('.') + 1:]) == 1:
-                return a
+            return a
         return a
-
 
     def prosm(self):
         self.nazv = self.LE5.text()
@@ -397,8 +415,6 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             self.LE2.setText("")
             self.LE3.setText("")
             self.LE4.setText("")
-
-
 
         else:
             self.ak = a
@@ -472,16 +488,16 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                         f.write(f'::{self.count}\n')
                         f.write('::При необходимости ответ округлите до сотых\n')
                         if i == 0:
-                            otvet = self.obr(self.obr(str(self.x1 * self.x2)))
+                            otvet = self.obr(self.answ(self.x1 * self.x2))
                             ot1 = otvet
                         elif i == 1:
-                            otvet = self.obr(self.obr(str(self.x1 + self.x2)))
+                            otvet = self.obr(self.answ(self.x1 + self.x2))
                             ot2 = otvet
                         elif i == 2:
-                            otvet = self.obr(self.obr(str(max(self.x1, self.x2))))
+                            otvet = self.obr(self.answ(max(self.x1, self.x2)))
                             ot3 = otvet
                         elif i == 3:
-                            otvet = self.obr(self.obr(str(min(self.x1, self.x2))))
+                            otvet = self.obr(self.answ(min(self.x1, self.x2)))
                             ot4 = otvet
                         f.write(f'::{self.ques[i]} {self.yra}\n')
                         f.write('{=' + f'{self.obr(str(otvet))}' + '}' + '\n')
@@ -490,12 +506,6 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                     self.dict[self.nazv] = self.count - 1
                 self.im.setVisible(True)
                 self.podick.setVisible(True)
-
-                # con = sqlite3.connect('DataBase.db')
-                # cur = con.cursor()
-                # cur.execute(f'INSERT INTO equation(id, yrav, summa, multiply, maxim, minim) VALUES({self.count}, {self.yra}, {ot1}, {ot2}, {ot3}, {ot4})')
-                # con.commit()
-                # con.close()
 
             else:
                 pred1 = QMessageBox()
